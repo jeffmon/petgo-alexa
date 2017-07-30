@@ -1,5 +1,7 @@
 'use strict';
 var Alexa = require('alexa-sdk');
+const rp = require("request-promise");
+const arduinoEndpoint = "http://bcda0588.ngrok.io/treat";
 
 //=========================================================================================================================================
 //TODO: The items below this comment need your attention.
@@ -35,6 +37,19 @@ exports.handler = function(event, context, callback) {
 
 var handlers = {
     'LaunchRequest': function () {
+      rp(arduinoEndpoint)
+        .then(htmlString => {
+          console.log("hit the endpoint at", arduinoEndpoint);
+          this.emit(
+            ':tellWithCard',
+            'Drop treat',
+            SKILL_NAME,
+            'Drop treat'
+          );
+        })
+        .catch(err => {
+          console.log("problem occurred", err);
+        })
         this.emit('GetNewFactIntent');
     },
     'GetNewFactIntent': function () {
