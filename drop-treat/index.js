@@ -40,11 +40,11 @@ var handlers = {
         this.emit('givemetreat');
     },
     'givemetreat': function () {
-        // var factArr = data;
-        // var factIndex = Math.floor(Math.random() * factArr.length);
-        // var randomFact = factArr[factIndex];
-        // var speechOutput = GET_FACT_MESSAGE + randomFact;
-        // this.emit(':tellWithCard', speechOutput, SKILL_NAME, randomFact)
+        var factArr = data;
+        var factIndex = Math.floor(Math.random() * factArr.length);
+        var randomFact = factArr[factIndex];
+        var speechOutput = GET_FACT_MESSAGE + randomFact;
+        this.emit(':tellWithCard', speechOutput, SKILL_NAME, randomFact)
         rp(arduinoEndpoint)
           .then(htmlString => {
             console.log("hit the endpoint at", arduinoEndpoint);
