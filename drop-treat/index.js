@@ -37,27 +37,22 @@ exports.handler = function(event, context, callback) {
 
 var handlers = {
     'LaunchRequest': function () {
-      rp(arduinoEndpoint)
-        .then(htmlString => {
-          console.log("hit the endpoint at", arduinoEndpoint);
-          this.emit(
-            ':tellWithCard',
-            'Drop treat',
-            SKILL_NAME,
-            'Drop treat'
-          );
-        })
-        .catch(err => {
-          console.log("problem occurred", err);
-        })
-        this.emit('GetNewFactIntent');
+        this.emit('givemetreat');
     },
-    'GetNewFactIntent': function () {
-        var factArr = data;
-        var factIndex = Math.floor(Math.random() * factArr.length);
-        var randomFact = factArr[factIndex];
-        var speechOutput = GET_FACT_MESSAGE + randomFact;
-        this.emit(':tellWithCard', speechOutput, SKILL_NAME, randomFact)
+    'givemetreat': function () {
+        // var factArr = data;
+        // var factIndex = Math.floor(Math.random() * factArr.length);
+        // var randomFact = factArr[factIndex];
+        // var speechOutput = GET_FACT_MESSAGE + randomFact;
+        // this.emit(':tellWithCard', speechOutput, SKILL_NAME, randomFact)
+        rp(arduinoEndpoint)
+          .then(htmlString => {
+            console.log("hit the endpoint at", arduinoEndpoint);
+            this.emit(':tellWithCard', 'Giving treat', SKILL_NAME, 'Giving treat')
+          })
+          .catch(err => {
+            console.log("problem occured", err);
+          });
     },
     'AMAZON.HelpIntent': function () {
         var speechOutput = HELP_MESSAGE;
